@@ -6,6 +6,17 @@
     actionInput = $('#action'),
     formOutput = $('#form-output');
 
+  function splitInto(input, separator, tokenCount){
+    var tokens = input.split(separator), outTokens = [];
+
+    outTokens = tokens.splice(0, tokenCount - 1);
+    if (tokens.length > 0){
+      outTokens.push(tokens.join(separator));
+    }
+
+    return outTokens;
+  }
+
   // source: http://stackoverflow.com/a/901144/24105
   function getParameterByName(name, url) {
     if (!url) {
@@ -28,7 +39,9 @@
       return null;
     }
 
-    var name, type;
+    var name, type,
+      firstIndex = line.indexOf(":"),
+      secondIndex = line.indexOf(":"),
 
     [name, type] = line.split(":");
 
@@ -43,9 +56,9 @@
   // takes a config in the form of and returns a list of html elements
   //    input:name
   //    text:age
-  //    textarea:message
+  //    textarea:message:Default message here
   //    file:resume
-  //    submit:Save
+  //    save:submit:Send Message
   function parseForm(config) {
     return config.replace(/\r\n/, "\n")
       .replace(/\r/, "\n")
@@ -56,8 +69,16 @@
 
   var renderers = {
     text: function({id, name, type}){
-      return `<input id="${id}" name="${name}" type="${type}" />`;
-    }
+      return `  <input id="${id}" name="${name}" type="${type}" />`;
+    },
+    textarea: function({id, name}){
+      return `  <textarea id="${id}" name="${name}"></textarea>`;
+    },
+    submit: function({id, name}){
+      id = id.toLowerCase().replace(/[^a-z_0-9-]/, '-').replace(/-+/, '-');
+      return `  <button id="${id}" type='submit'>${name}</button>`;
+    },
+
   }
 
   // takes a config in the form of

@@ -4,22 +4,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>HTML Form Builder</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
     <style type="text/css" media="screen">
+      body {
+        font-family: 'Source Code Pro', monospace;
+        color: #222;
+        border-top: solid 10px #f57f17;
+        margin: 0;
+        padding: 0;
+      }
+      #container{
+        padding: 8px;
+      }
       #action, #config{width: 400px;}
     </style>
   </head>
   <body>
+    <div id=container>
     <h1>HTML Form Builder</h1>
     <textarea id="config" rows="8" cols="40">
 name
 age:text
 message:textarea
-resume:file
-    </textarea>
+resume:file</textarea>
     <br />
     <input type="text" id="action" placeholder='Form action ...' />
     <pre id='form-output'>
     </pre>
+    </div>
     <script type="text/javascript" charset="utf-8" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
     <script type="text/javascript" charset="utf-8" src='app.js'></script>
   </body>
